@@ -1,0 +1,12 @@
+{application, multinode,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { multinode_app, []}},
+  {env, []}
+ ]}.
