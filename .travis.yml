@@ -1,2 +1,7 @@
 language: erlang
 sudo:     false
+
+before_script:
+  - epmd -daemon
+  - erl -sname "detached" -detached
+  - erl -sname "rpckill" -detached
