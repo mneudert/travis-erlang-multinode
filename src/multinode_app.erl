@@ -10,7 +10,7 @@
 %% ===================================================================
 
 start(_StartType, _StartArgs) ->
-    multinode_sup:start_link().
+    net_kernel:start([ multinode, shortnames ]).
 
 stop(_State) ->
     ok.
