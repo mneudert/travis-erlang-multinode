@@ -6,4 +6,4 @@ before_script:
   - erl -sname "detached" -detached
   - erl -sname "rpckill" -detached
 
-script: rebar compile && rebar ct
+script: ./test_script.erl
