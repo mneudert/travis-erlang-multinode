@@ -7,6 +7,12 @@ before_script:
   - erl -sname "detached" -detached
   - erl -sname "rpckill" -detached
 
+  - export ROOTDIR="/home/travis/otp/17.4"
+  - export BINDIR="$ROOTDIR/erts-6.3/bin"
+  - export EMU="beam"
+  - export PROGNAME="erl"
+  - $BINDIR/erlexec -sname exec -detached
+
   - ps waux
   - cat `which erl`
 
