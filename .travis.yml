@@ -14,6 +14,7 @@ before_script:
   - $BINDIR/erlexec -sname exec -detached
 
   - ps waux
+  - netstat -tulpen
   - cat `which erl`
 
 script: ./test_script.erl
