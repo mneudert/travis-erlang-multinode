@@ -1,25 +1,30 @@
 #!/usr/bin/env escript
 
-main(_) ->
-    startup(),
-    connect_nodes(),
-    try_rpckill(),
+main(Config) ->
+    Hostname = lists:nth(1, Config),
+    startup(Hostname),
+    connect_nodes(Hostname),
+    try_rpckill(Hostname),
     ok.
 
 
-startup() ->
-    io:fwrite("start main node: ~w~n", [ net_kernel:start([ multinode, shortnames ]) ]),
+startup(Hostname) ->
+    Nodename = list_to_atom("multinode@" ++ Hostname),
+    io:fwrite("start main node: ~w~n", [ net_kernel:start([ Nodename, longnames ]) ]),
     io:fwrite("local node: ~w~n", [ node() ]),
     io:fwrite("~n").
 
-connect_nodes() ->
-    io:fwrite("ping 'detached@localhost': ~w~n", [ net_adm:ping('detached@localhost') ]),
-    io:fwrite("ping 'rpckill@localhost': ~w~n", [ net_adm:ping('rpckill@localhost') ]),
+connect_nodes(Hostname) ->
+    DetachedName = list_to_atom("detached@" ++ Hostname),
+    RpckillName = list_to_atom("rpckill@" ++ Hostname),
+    io:fwrite("ping ~w: ~w~n", [ DetachedName, net_adm:ping(DetachedName) ]),
+    io:fwrite("ping ~w: ~w~n", [ RpckillName, net_adm:ping(RpckillName) ]),
     io:fwrite("connected nodes: ~w~n", [ nodes() ]),
     io:fwrite("~n").
 
-try_rpckill() ->
-    io:fwrite("kill node via rpc: ~w~n", [ rpc:call('rpckill@localhost', init, stop, []) ]),
+try_rpckill(Hostname) ->
+    RpckillName = list_to_atom("rpckill@" ++ Hostname),
+    io:fwrite("kill node via rpc: ~w~n", [ rpc:call(RpckillName, init, stop, []) ]),
     timer:sleep(1000),
     io:fwrite("connected nodes: ~w~n", [ nodes() ]),
     io:fwrite("~n").

@@ -4,17 +4,7 @@ sudo:        false
 
 before_script:
   - epmd -daemon
-  - erl -sname "detached" -detached
-  - erl -sname "rpckill" -detached
+  - erl -name "detached`hostname -f`" -detached
+  - erl -name "rpckill`hostname -f`" -detached
 
-  - export ROOTDIR="/home/travis/otp/17.4"
-  - export BINDIR="$ROOTDIR/erts-6.3/bin"
-  - export EMU="beam"
-  - export PROGNAME="erl"
-  - $BINDIR/erlexec -sname exec -detached
-
-  - ps waux
-  - netstat -tulpen
-  - cat `which erl`
-
-script: ./test_script.erl
+script: ./test_script.erl `hostname -f`
