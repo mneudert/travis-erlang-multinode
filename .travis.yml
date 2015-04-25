@@ -5,6 +5,8 @@ before_script:
   - epmd -daemon
   - erl -sname "detached" -detached
   - erl -sname "rpckill" -detached
+
   - ps waux
+  - cat `which erl`
 
 script: ./test_script.erl
