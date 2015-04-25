@@ -7,4 +7,6 @@ before_script:
   - erl -name "detached`hostname -f`" -detached
   - erl -name "rpckill`hostname -f`" -detached
 
-script: ./test_script.erl `hostname -f`
+script:
+  - ps wwaux
+  - ./test_script.erl `hostname -f`
