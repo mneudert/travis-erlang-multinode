@@ -4,8 +4,8 @@ sudo:        false
 
 before_script:
   - epmd -daemon
-  - erl -name "detached`hostname -f`" -detached
-  - erl -name "rpckill`hostname -f`" -detached
+  - erl -name "detached@`hostname -f`" -detached
+  - erl -name "rpckill@`hostname -f`" -detached
 
 script:
   - ps wwaux
